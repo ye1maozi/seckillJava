@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.seckill.dao.SkGoodsSeckillMapper">
+  <resultMap id="BaseResultMap" type="com.learn.seckill.pojo.SkGoodsSeckill">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="seckill_price" jdbcType="DECIMAL" property="seckillPrice" />
+    <result column="stock_count" jdbcType="INTEGER" property="stockCount" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_id, seckill_price, stock_count, start_date, end_date, version, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_goods_seckill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sk_goods_seckill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.learn.seckill.pojo.SkGoodsSeckill">
+    insert into sk_goods_seckill (id, goods_id, seckill_price, 
+      stock_count, start_date, end_date, 
+      version, create_time)
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{seckillPrice,jdbcType=DECIMAL}, 
+      #{stockCount,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.learn.seckill.pojo.SkGoodsSeckill">
+    insert into sk_goods_seckill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="seckillPrice != null">
+        seckill_price,
+      </if>
+      <if test="stockCount != null">
+        stock_count,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="seckillPrice != null">
+        #{seckillPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.learn.seckill.pojo.SkGoodsSeckill">
+    update sk_goods_seckill
+    <set>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="seckillPrice != null">
+        seckill_price = #{seckillPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockCount != null">
+        stock_count = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.learn.seckill.pojo.SkGoodsSeckill">
+    update sk_goods_seckill
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      seckill_price = #{seckillPrice,jdbcType=DECIMAL},
+      stock_count = #{stockCount,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="reduceStockByVersion"  >
+    update sk_goods_seckill
+    set stock_count = stock_count -1,
+        version = version + 1
+    where goods_id = #{goodsId} and id=#{seckillId} and stock_count > 0 and version = #{version}
+  </update>
+  <select id="getVersionByGoodsId" resultType="java.lang.Integer">
+    select s.version from sk_goods_seckill s where goods_id = #{goodsId} and id=#{seckillId}
+  </select>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.seckill.dao.SkOrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.learn.seckill.pojo.SkOrderInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="devlivery_addr_id" jdbcType="BIGINT" property="devliveryAddrId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="order_channel" jdbcType="TINYINT" property="orderChannel" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, goods_id, devlivery_addr_id, goods_name, goods_count, goods_price, order_channel, 
+    status, pay_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sk_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.learn.seckill.pojo.SkOrderInfo">
+    insert into sk_order_info (id, user_id, goods_id, 
+      devlivery_addr_id, goods_name, goods_count, 
+      goods_price, order_channel, status, 
+      pay_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{devliveryAddrId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{orderChannel,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.learn.seckill.pojo.SkOrderInfo" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into sk_order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="devliveryAddrId != null">
+        devlivery_addr_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsCount != null">
+        goods_count,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="orderChannel != null">
+        order_channel,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="devliveryAddrId != null">
+        #{devliveryAddrId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderChannel != null">
+        #{orderChannel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.learn.seckill.pojo.SkOrderInfo">
+    update sk_order_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="devliveryAddrId != null">
+        devlivery_addr_id = #{devliveryAddrId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCount != null">
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderChannel != null">
+        order_channel = #{orderChannel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.learn.seckill.pojo.SkOrderInfo">
+    update sk_order_info
+    set user_id = #{userId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      devlivery_addr_id = #{devliveryAddrId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      order_channel = #{orderChannel,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
