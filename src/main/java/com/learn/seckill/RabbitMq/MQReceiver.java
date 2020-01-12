@@ -36,10 +36,10 @@ public class MQReceiver {
             return;
         }
 //
-//        SkOrder order = orderService.getOrderByUserIdGoodsId(user.getId(),goodsId);
-//        if (order != null){
-//            return;
-//        }
+        SkOrder order = orderService.getOrderByUserIdGoodsId(user.getId(),goodsId);
+        if (order != null){
+            return;
+        }
 
         //下单
         seckillService.seckill(user,goods);

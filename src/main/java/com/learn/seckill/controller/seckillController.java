@@ -65,21 +65,21 @@ public class seckillController implements InitializingBean {
         if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)){
             return Result.error(CodeMsg.ACCESS_LIMIT_REACHED);
         }
-//        Cookie[] cookies = request.getCookies();//这样便可以获取一个cookie数组
-//
-//        if (cookies == null) {
-//            return Result.error(CodeMsg.SESSION_ERROR);
-//        }
-//        String token = CookieUtil.hasCookie(cookies);
-//        if (   null == token){
-//            return Result.error(CodeMsg.SESSION_ERROR);
-//        }
-//        SkUser user = userService.getByToken(token);
-//        if (user == null) {
-//            return Result.error(CodeMsg.SESSION_ERROR);
-//        }
-        SkUser user = new SkUser();
-        user.setId(2L);
+        Cookie[] cookies = request.getCookies();//这样便可以获取一个cookie数组
+
+        if (cookies == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        String token = CookieUtil.hasCookie(cookies);
+        if (   null == token){
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        SkUser user = userService.getByToken(token);
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+//        SkUser user = new SkUser();
+//        user.setId(2L);
 
         if (! localOverMap.containsKey(goodsId)){
             return  Result.error(CodeMsg.SECKILL_GOODIS);
@@ -99,11 +99,11 @@ public class seckillController implements InitializingBean {
                 return Result.error(CodeMsg.SECKILL_OVER);
             }
         }
-//        SkOrder order = orderService.getOrderByUserIdGoodsId(user.getId(),goodsId);
-//        //重复订单
-//        if (order != null){
-//            return  Result.error(CodeMsg.REPEATE_SECKILL);
-//        }
+        SkOrder order = orderService.getOrderByUserIdGoodsId(user.getId(),goodsId);
+        //重复订单
+        if (order != null){
+            return  Result.error(CodeMsg.REPEATE_SECKILL);
+        }
 
         //开始真实的秒杀
 
